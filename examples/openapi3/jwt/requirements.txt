@@ -1,4 +1,4 @@
-connexion>=2.0.0rc3
-python-jose[cryptography]
-six>=1.9
-Flask>=0.10.1
+aiohttp>=2.2.5
+aiohttp-swagger>=1.0.5
+ujson>=1.35
+aiohttp_jinja2==0.15.0

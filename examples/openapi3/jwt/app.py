@@ -17,7 +17,7 @@ JWT_LIFETIME_SECONDS = 600
 JWT_ALGORITHM = 'HS256'
 
 
-def generate_token(user_id):
+async def generate_token(user_id):
     timestamp = _current_timestamp()
     payload = {
         "iss": JWT_ISSUER,
@@ -29,14 +29,14 @@ def generate_token(user_id):
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
 
-def decode_token(token):
+async def decode_token(token):
     try:
         return jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
     except JWTError as e:
         six.raise_from(Unauthorized, e)
 
 
-def get_secret(user, token_info) -> str:
+async def get_secret(user, token_info) -> str:
     return '''
     You are user_id {user} and the secret is 'wbevuec'.
     Decoded token claims: {token_info}.
@@ -48,6 +48,6 @@ def _current_timestamp() -> int:
 
 
 if __name__ == '__main__':
-    app = connexion.FlaskApp(__name__)
+    app = connexion.AioHttpApp(__name__)
     app.add_api('openapi.yaml')
     app.run(port=8080)
